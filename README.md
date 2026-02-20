@@ -23,4 +23,4 @@ Initial bootstrap copied from `core` repository (`src/database`, `src/models`) o
 
 Use direct wheel URL pinning in consumer repos:
 
-`data-models @ https://github.com/helena-trading/data-models/releases/download/v0.2.0/data_models-0.2.0-py3-none-any.whl`
+`data-models @ https://github.com/helena-trading/data-models/releases/download/v1.0.0/data_models-1.0.0-py3-none-any.whl`
