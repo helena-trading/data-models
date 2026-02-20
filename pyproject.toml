@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "data-models"
+version = "0.2.0"
+description = "Shared database and model package for Helena Trading"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [{name = "Helena Trading"}]
+
+dependencies = [
+  "SQLAlchemy>=2.0.0",
+  "pydantic>=2.5.0",
+  "psycopg>=3.1.18",
+  "psycopg-pool>=3.2.2",
+  "cryptography>=42.0.0",
+  "boto3>=1.35.0",
+  "urllib3<2.1.0",
+]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["data_models*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-q"

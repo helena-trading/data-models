@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install editable package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e . pytest
+      - name: Import smoke
+        run: pytest tests/test_import_smoke.py
+
+  build-artifact:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Build distribution
+        run: |
+          python -m pip install --upgrade pip
+          pip install build twine
+          python -m build --sdist --wheel
+          twine check dist/*
+      - name: Install built wheel and run smoke import
+        run: |
+          python -m pip install --upgrade pip
+          pip install dist/*.whl
+          python - <<'PY'
+          from data_models.database.tables.bot import Bot
+          from data_models.models.runtime_control_plane import RuntimeHealthReportContract
+          print("wheel import smoke OK")
+          PY
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: data-models-dist
+          path: dist/*
