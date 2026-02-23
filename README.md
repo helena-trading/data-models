@@ -17,10 +17,10 @@ Initial bootstrap copied from `core` repository (`src/database`, `src/models`) o
 - CI validates editable install + built artifacts.
 - Publishing is automated via `.github/workflows/release.yml` on `v*` tags.
 - Release artifacts (`.whl` and `.tar.gz`) are attached to GitHub Releases.
-- Consumers should pin an exact package version (current: `0.2.0`).
+- Consumers should pin an exact package version (current: `1.0.1`).
 
 ## Consumption via GitHub Releases
 
 Use direct wheel URL pinning in consumer repos:
 
-`data-models @ https://github.com/helena-trading/data-models/releases/download/v1.0.0/data_models-1.0.0-py3-none-any.whl`
+`data-models @ https://github.com/helena-trading/data-models/releases/download/v1.0.1/data_models-1.0.1-py3-none-any.whl`
