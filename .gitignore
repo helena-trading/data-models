@@ -7,3 +7,4 @@ dist/
 .mypy_cache/
 .venv/
 *.log
+uv.lock
