@@ -65,11 +65,11 @@ class MasterKeyProvider:
                     warning("[MasterKeyProvider] No master key found, generating new one for development")
                     key_bytes = secrets.token_bytes(32)  # 256 bits
                     key_b64 = base64.b64encode(key_bytes).decode()
-                    info(f"[MasterKeyProvider] Generated master key (save this): {key_b64}")
+                    info("[MasterKeyProvider] Generated new master key for development (set HELENA_MASTER_KEY env var)")
                 else:
                     raise ValueError("Master encryption key not found in environment")
             else:
-                info(f"[MasterKeyProvider] Master key found: {key_b64[:10]}... (length: {len(key_b64)})")
+                info(f"[MasterKeyProvider] Master key found (length: {len(key_b64)})")
 
             try:
                 self._cached_key = base64.b64decode(key_b64)
