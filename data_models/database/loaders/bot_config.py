@@ -661,6 +661,23 @@ def transform_graph_bot_config(bot_config: Dict[str, Any]) -> Dict[str, Any]:
             if "use_websocket_for_orders" not in exchange:
                 exchange["use_websocket_for_orders"] = use_websocket_for_orders_graph
 
+    # Apply private-data-hub and orders-command-hub settings to graph exchanges
+    # (same helpers used by cross_arb transform)
+    pdh_settings = _extract_private_data_hub_settings(bot_config)
+    _apply_private_data_hub_settings(graph_config["exchanges"], pdh_settings)
+    info(
+        "[BotConfigLoader] Applied private_data_hub settings to graph exchanges: "
+        f"{[ex.get('id', ex.get('name')) for ex in graph_config['exchanges']]}"
+    )
+
+    och_settings = _extract_orders_command_hub_settings(bot_config)
+    _apply_orders_command_hub_settings(graph_config["exchanges"], och_settings)
+    if bool(och_settings.get("enabled", False)):
+        info(
+            "[BotConfigLoader] Applied orders_command_hub settings to graph exchanges: "
+            f"{[ex.get('id', ex.get('name')) for ex in graph_config['exchanges']]}"
+        )
+
     # Add other configuration sections if present (same as cross_arb transform)
     if "risk_management" in bot_config:
         config["risk_management"] = bot_config["risk_management"]
