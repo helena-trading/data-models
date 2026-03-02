@@ -678,19 +678,28 @@ class ExecutionContext:
         Return new context with active order context set.
 
         Used by graph engine to track the current maker/taker exchange
-        routing for an active order lifecycle.
+        routing for an active order lifecycle. Also updates route contracts
+        so that downstream handlers (e.g., CancellationBroker) see the
+        correct contract instead of the initial placeholder.
 
         Args:
             active_order_context: Immutable context for exchange routing
 
         Returns:
-            New ExecutionContext with active order context set
+            New ExecutionContext with active order context and route updated
         """
         new_graph = dataclasses.replace(
             self.graph or GraphState(),
             active_order_context=active_order_context,
         )
-        return dataclasses.replace(self, graph=new_graph)
+        new_route = dataclasses.replace(
+            self.route,
+            contract_maker=active_order_context.maker_contract,
+            contract_taker=active_order_context.taker_contract,
+            maker_exchange=active_order_context.maker_exchange_name,
+            taker_exchange=active_order_context.taker_exchange_name,
+        )
+        return dataclasses.replace(self, graph=new_graph, route=new_route)
 
     def with_request_tracking(
         self,
