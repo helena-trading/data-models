@@ -701,6 +701,32 @@ class ExecutionContext:
         )
         return dataclasses.replace(self, graph=new_graph, route=new_route)
 
+    def with_order_created(
+        self,
+        quote: "Quote",
+        quote_sent: "Quote",
+        internal_id: InternalOrderId,
+        lifecycle_id: Optional[str],
+        order_request_time: int,
+    ) -> "ExecutionContext":
+        """Return new context with all order-creation fields set in a single replace.
+
+        Replaces the 4-call chain: with_quote().with_quote_sent().with_maker_internal_id().with_request_tracking().
+        """
+        new_market = dataclasses.replace(self.market, quote=quote, quote_sent=quote_sent)
+        new_orders = dataclasses.replace(
+            self.orders,
+            maker_internal_id=internal_id,
+            lifecycle_id=lifecycle_id if lifecycle_id else self.orders.lifecycle_id,
+        )
+        new_timing = dataclasses.replace(self.timing, order_request_time=order_request_time)
+        return dataclasses.replace(
+            self,
+            market=new_market,
+            orders=new_orders,
+            timing=new_timing,
+        )
+
     def with_request_tracking(
         self,
         order_request_time: Optional[int] = None,

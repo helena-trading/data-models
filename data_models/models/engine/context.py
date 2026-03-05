@@ -251,6 +251,7 @@ class GraphState:
 
     exchanges: Tuple["IGateway", ...] = ()
     trading_pairs: Tuple[str, ...] = ()
+    trading_pair_objects: Tuple = ()
     active_order_context: Optional["ActiveOrderContext"] = None
     opportunity: Optional["GraphOpportunity"] = None
     current_opportunity: Optional["GraphOpportunity"] = None
