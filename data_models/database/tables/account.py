@@ -57,6 +57,7 @@ class Account(Base):  # type: ignore[misc,no-any-unimported]
         # Map enum values to their base names for validation
         valid_exchanges = {
             "hyperliquid": ExchangeName.HYPERLIQUID,
+            "hyperliquid_spot": ExchangeName.HYPERLIQUID_SPOT,
             "bybit": ExchangeName.BYBIT,
             "binance": ExchangeName.BINANCE_FUTURES,  # Base binance maps to futures
             "binance_spot": ExchangeName.BINANCE_SPOT,

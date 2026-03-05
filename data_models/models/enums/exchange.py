@@ -40,6 +40,7 @@ class ExchangeName(StrEnum):
     BYBIT = "bybit"
 
     # DEX Spot
+    HYPERLIQUID_SPOT = "hyperliquid_spot"
     LIGHTER_SPOT = "lighter_spot"
 
     # DEX Futures
@@ -54,7 +55,7 @@ class ExchangeName(StrEnum):
     @classmethod
     def spot_exchanges(cls) -> List["ExchangeName"]:
         """Return all spot exchanges."""
-        return [cls.BINANCE_SPOT, cls.RIPIO_TRADE, cls.LIGHTER_SPOT]
+        return [cls.BINANCE_SPOT, cls.RIPIO_TRADE, cls.HYPERLIQUID_SPOT, cls.LIGHTER_SPOT]
 
     @classmethod
     def futures_exchanges(cls) -> List["ExchangeName"]:
@@ -81,6 +82,7 @@ EXCHANGE_TRADE_TYPE: dict[ExchangeName, TradeType] = {
     # Spot exchanges
     ExchangeName.BINANCE_SPOT: TradeType.SPOT,
     ExchangeName.RIPIO_TRADE: TradeType.SPOT,
+    ExchangeName.HYPERLIQUID_SPOT: TradeType.SPOT,
     ExchangeName.LIGHTER_SPOT: TradeType.SPOT,
     # Futures exchanges
     ExchangeName.BINANCE_FUTURES: TradeType.FUTURES,
